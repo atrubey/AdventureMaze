@@ -3,28 +3,31 @@ package adventureMaze;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Player extends GameObject {
-	public Player(int X, int Y, int Width, int Height, int Speed) {
+public class Projectile extends GameObject {
+	public Projectile(int X, int Y, int Width, int Height) {
 		super();
 		x = X;
 		y = Y;
 		width = Width;
 		height = Height;
-		speed = Speed; 
+		speed = 10; 
 	}
 	
 	int speed; 
 	
 	public void update() {
-		if (canMove) {
 		super.update();
+		y -= speed; 
+		if (y < 0) {
+			isAlive = false;
 		}
 	}
 
 	public void draw(Graphics g) {
-	//	g.drawImage(GamePanel.playerImg, x, y, width, height, null);
-		g.setColor(Color.GRAY);
+	//	g.drawImage(GamePanel.bulletImg, x, y, width, height, null);
+		g.setColor(Color.blue);
 		g.drawRect(x, y, width, height);
-	}
 
+	}
+	
 }

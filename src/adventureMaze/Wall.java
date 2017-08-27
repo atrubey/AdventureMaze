@@ -1,0 +1,23 @@
+package adventureMaze;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Wall extends GameObject {
+	public Wall(int X, int Y, int Width, int Height) {
+		x = X;
+		y = Y;
+		width = Width;
+		height = Height;
+	}
+
+	public void update() {
+
+
+	}
+
+	public void draw(Graphics g) {
+		g.setColor(Color.RED);
+		g.drawRect(x, y, width, height);
+	}
+}
