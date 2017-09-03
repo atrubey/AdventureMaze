@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 public class Wall extends GameObject {
 	public Wall(int X, int Y, int Width, int Height) {
+		super();
 		x = X;
 		y = Y;
 		width = Width;
@@ -12,7 +13,7 @@ public class Wall extends GameObject {
 	}
 
 	public void update() {
-
+		super.update();
 
 	}
 
