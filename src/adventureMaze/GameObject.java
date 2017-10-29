@@ -10,7 +10,7 @@ public class GameObject {
 	}
 
 	int x, y, width, height;
-	Boolean isAlive = true, canMove = true;
+	boolean isAlive = true, canMove = true;
 	Rectangle collisionBox;
 
 	public void update() {

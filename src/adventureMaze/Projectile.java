@@ -11,13 +11,24 @@ public class Projectile extends GameObject {
 		width = Width;
 		height = Height;
 		speed = 10; 
+		move = lastMove;
 	}
 	
-	int speed; 
+	int speed, move; 
+	static int lastMove; 
 	
 	public void update() {
 		super.update();
-		y -= speed; 
+		
+		if (move == 0) {
+			y -= speed; 
+		} else if (move == 2) {
+			y += speed;
+		} else if (move == 1) {
+			x += speed;
+		} else if (move == 4) {
+			x -= speed;
+		}
 		if (y < 0) {
 			isAlive = false;
 		}

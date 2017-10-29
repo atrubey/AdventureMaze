@@ -8,17 +8,15 @@ public class ObjectManager {
 	ArrayList<Enemy> enemies;
 	ArrayList<Player> players;
 	ArrayList<Wall> walls;
-	ArrayList<Item> items;
 	ArrayList<Projectile> projectiles;
 
 	long enemyTimer = 0;
-	int enemySpawnTime = 1000;
+	int enemySpawnTime = 2000;
 
 	public ObjectManager() {
 		enemies = new ArrayList<Enemy>();
 		players = new ArrayList<Player>();
 		walls = new ArrayList<Wall>();
-		items = new ArrayList<Item>();
 		projectiles = new ArrayList<Projectile>();
 	}
 
@@ -32,10 +30,6 @@ public class ObjectManager {
 
 	public void addWall(Wall w) {
 		walls.add(w);
-	}
-
-	public void addItem(Item i) {
-		items.add(i);
 	}
 
 	public void addProjectile(Projectile j) {
@@ -54,10 +48,6 @@ public class ObjectManager {
 		for (int l = 0; l < walls.size(); l++) {
 			Wall w = walls.get(l);
 			w.update();
-		}
-		for (int x = 0; x < items.size(); x++) {
-			Item i = items.get(x);
-			i.update();
 		}
 		for (int d = 0; d < projectiles.size(); d++) {
 			Projectile c = projectiles.get(d);
@@ -81,10 +71,6 @@ public class ObjectManager {
 			Wall w = walls.get(l);
 			w.draw(g);
 		}
-		for (int m = 0; m < items.size(); m++) {
-			Item i = items.get(m);
-			i.draw(g);
-		}
 		for (int d = 0; d < projectiles.size(); d++) {
 			Projectile c = projectiles.get(d);
 			c.draw(g);
@@ -105,11 +91,6 @@ public class ObjectManager {
 		for (int l = 0; l < walls.size(); l++) {
 			if (!walls.get(l).isAlive) {
 				walls.remove(l);
-			}
-		}
-		for (int m = 0; m < items.size(); m++) {
-			if (!items.get(m).isAlive) {
-				items.remove(m);
 			}
 		}
 		for (int d = 0; d < projectiles.size(); d++) {
@@ -148,6 +129,17 @@ public class ObjectManager {
 				}
 			}
 		}
+		
+		for (int i = 0; i < walls.size(); i++) {
+			for (int j = 0; j < projectiles.size(); j++) {
+				Wall w1 = walls.get(i);
+				Projectile p1 = projectiles.get(j);
+
+				if (w1.collisionBox.intersects(p1.collisionBox)) {
+					p1.isAlive = false;
+				}
+			}
+		}
 
 		for (int i = 0; i < enemies.size(); i++) {
 			for (int j = 0; j < walls.size(); j++) {
@@ -156,6 +148,19 @@ public class ObjectManager {
 
 				if (e1.collisionBox.intersects(w1.collisionBox)) {
 					e1.canMove = false;
+				}
+
+			}
+		}
+		
+		for (int i = 0; i < enemies.size(); i++) {
+			for (int j = i+1; j < enemies.size(); j++) {
+				Enemy e1 = enemies.get(i);
+				Enemy e2 = enemies.get(j);
+
+				if (e1.collisionBox.intersects(e2.collisionBox)) {
+					e1.canMove = false;
+					e2.canMove = false;
 				}
 
 			}
@@ -178,7 +183,6 @@ public class ObjectManager {
 		enemies.clear();
 		players.clear();
 		walls.clear();
-		items.clear();
 		projectiles.clear();
 	}
 }
