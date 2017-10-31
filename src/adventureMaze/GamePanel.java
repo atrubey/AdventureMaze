@@ -33,14 +33,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		level = new LevelManager();
 		
 		try {
-			playerImg = ImageIO.read(this.getClass().getResourceAsStream("PlayerImg.png"));
-			enemyImg = ImageIO.read(this.getClass().getResourceAsStream("EnemyImg.png"));
-			bulletImg = ImageIO.read(this.getClass().getResourceAsStream("BulletImg.png"));
-			wallImg = ImageIO.read(this.getClass().getResourceAsStream("WallImg.png"));
-			menuBkgndImg = ImageIO.read(this.getClass().getResourceAsStream("MenuBackground.png"));
-			endBkgndImg = ImageIO.read(this.getClass().getResourceAsStream("EndImg.png"));
-			gameBkgndImg = ImageIO.read(this.getClass().getResourceAsStream("GameImg.png"));
-			winBkgndImg = ImageIO.read(this.getClass().getResourceAsStream("WinImg.png"));
+			playerImg = ImageIO.read(this.getClass().getResourceAsStream("images/PlayerImg.png"));
+			enemyImg = ImageIO.read(this.getClass().getResourceAsStream("images/EnemyImg.png"));
+			bulletImg = ImageIO.read(this.getClass().getResourceAsStream("images/BulletImg.png"));
+			wallImg = ImageIO.read(this.getClass().getResourceAsStream("images/WallImg.png"));
+			menuBkgndImg = ImageIO.read(this.getClass().getResourceAsStream("images/MenuBackground.png"));
+			endBkgndImg = ImageIO.read(this.getClass().getResourceAsStream("images/EndImg.png"));
+			gameBkgndImg = ImageIO.read(this.getClass().getResourceAsStream("images/GameImg.png"));
+			winBkgndImg = ImageIO.read(this.getClass().getResourceAsStream("images/WinImg.png"));
 
 		} catch (IOException e) {
 			// TODO: handle exceptions
