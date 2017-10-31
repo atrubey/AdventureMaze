@@ -19,7 +19,7 @@ public class Player extends GameObject {
 	}
 
 	int speed, tempX, tempY;
-	boolean up, down, left, right, ifWin = false; 
+	boolean up, down, left, right, ifWin; 
 
 	public void update() {
 
@@ -48,14 +48,17 @@ public class Player extends GameObject {
 		
 		collisionBox.setBounds(tempX, tempY, width, height);
 
+		if (Projectile.lastMove == 1) {
+
+		}
 
 
 	}
 
 	public void draw(Graphics g) {
-		// g.drawImage(GamePanel.playerImg, x, y, width, height, null);
-		g.setColor(Color.BLUE);
-		g.drawRect(x, y, width, height);
+		g.drawImage(GamePanel.playerImg, x, y, width, height, null);
+		//g.setColor(Color.BLUE);
+		//g.drawRect(x, y, width, height);
 	}
 
 }

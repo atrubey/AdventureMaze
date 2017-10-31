@@ -11,7 +11,7 @@ public class ObjectManager {
 	ArrayList<Projectile> projectiles;
 
 	long enemyTimer = 0;
-	int enemySpawnTime = 2000;
+	int enemySpawnTime = 3000;
 
 	public ObjectManager() {
 		enemies = new ArrayList<Enemy>();
@@ -102,8 +102,24 @@ public class ObjectManager {
 
 	public void manageEnemies() {
 		if (System.currentTimeMillis() - enemyTimer >= enemySpawnTime) {
-			addEnemy(new Enemy(new Random().nextInt(AdventureMaze.WIDTH - 50), 50, 50, 50));
-			enemyTimer = System.currentTimeMillis();
+			Random randGen = new Random(); 
+			int r1 = randGen.nextInt(5);
+			if (r1 == 0) {
+				addEnemy(new Enemy(365, 295, 40, 40, GamePanel.enemySpeed));
+				enemyTimer = System.currentTimeMillis();
+			} else if (r1 == 1) {
+				addEnemy(new Enemy(15, 15, 40, 40, GamePanel.enemySpeed));
+				enemyTimer = System.currentTimeMillis();
+			} else if (r1 == 2) {
+				addEnemy(new Enemy(715, 715, 40, 40, GamePanel.enemySpeed));
+				enemyTimer = System.currentTimeMillis();
+			} else if (r1 == 3) {
+				addEnemy(new Enemy(435, 15, 40, 40, GamePanel.enemySpeed));
+				enemyTimer = System.currentTimeMillis();
+			} else if (r1 >= 4) {
+				addEnemy(new Enemy(715, 225, 40, 40, GamePanel.enemySpeed));
+				enemyTimer = System.currentTimeMillis();
+			}
 		}
 	}
 

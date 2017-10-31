@@ -35,9 +35,9 @@ public class Projectile extends GameObject {
 	}
 
 	public void draw(Graphics g) {
-	//	g.drawImage(GamePanel.bulletImg, x, y, width, height, null);
-		g.setColor(Color.blue);
-		g.drawRect(x, y, width, height);
+	 	g.drawImage(GamePanel.bulletImg, x, y, width, height, null);
+		//g.setColor(Color.blue);
+		//g.drawRect(x, y, width, height);
 
 	}
 	

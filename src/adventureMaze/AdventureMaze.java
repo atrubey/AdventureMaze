@@ -15,8 +15,8 @@ public class AdventureMaze {
 	GamePanel panel;
 	JFrame frame;
 
-	static final int WIDTH = 770;
-	static final int HEIGHT = 1000;
+	static final int WIDTH = 780;
+	static final int HEIGHT = 800;
 
 	void setup() {
 		frame.add(panel);
