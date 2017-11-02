@@ -1,9 +1,15 @@
 package adventureMaze;
 
 import javax.swing.JFrame;
-import java.awt.event.KeyEvent;
 
 public class AdventureMaze {
+	
+	GamePanel panel;
+	JFrame frame;
+
+	static final int WIDTH = 780;
+	static final int HEIGHT = 800;
+	
 	public AdventureMaze() {
 
 		frame = new JFrame();
@@ -11,12 +17,6 @@ public class AdventureMaze {
 		setup();
 
 	}
-
-	GamePanel panel;
-	JFrame frame;
-
-	static final int WIDTH = 780;
-	static final int HEIGHT = 800;
 
 	void setup() {
 		frame.add(panel);

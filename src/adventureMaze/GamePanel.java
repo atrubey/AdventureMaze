@@ -15,8 +15,21 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
+	
+	private Timer timer;
+	public GameObject game;
+	private LevelManager level;
+	private Font titleFont, startFont, instructionsFont, gameOverFont, scoreFont;
+	private Player player;
+	public ObjectManager manager;
+	private final int MENU_STATE = 0, GAME_STATE = 1, END_STATE = 2, WIN_STATE = 3;
+	private int currentState = MENU_STATE, currentLevel = 1;
+	public static BufferedImage playerImg, enemyImg, bulletImg, menuBkgndImg, endBkgndImg, gameBkgndImg, wallImg,
+			winBkgndImg;
+	public static int playerX, playerY, enemySpeed;
+	
 	public GamePanel() {
-
+		
 		timer = new Timer(1000 / 60, this);
 		game = new GameObject();
 		titleFont = new Font("Arial", Font.BOLD, 64);
@@ -29,9 +42,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		manager.addPlayer(player);
 		playerX = player.x;
 		playerY = player.y;
-		enemySpeed = 3; 
+		enemySpeed = 3;
 		level = new LevelManager();
-		
+		level.createLevel1(manager);
+
 		try {
 			playerImg = ImageIO.read(this.getClass().getResourceAsStream("images/PlayerImg.png"));
 			enemyImg = ImageIO.read(this.getClass().getResourceAsStream("images/EnemyImg.png"));
@@ -46,21 +60,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			// TODO: handle exceptions
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	Timer timer;
-	GameObject game;
-	LevelManager level;
-	Font titleFont, startFont, instructionsFont, gameOverFont, scoreFont;
-	Player player;
-	ObjectManager manager;
-	final int MENU_STATE = 0, GAME_STATE = 1, END_STATE = 2, WIN_STATE = 3;
-	int currentState = MENU_STATE;
-	public static BufferedImage playerImg, enemyImg, bulletImg, menuBkgndImg, endBkgndImg, gameBkgndImg, wallImg, winBkgndImg;
-	static int playerX, playerY, enemySpeed; 
-	int currentLevel = 1;
-	
 	void updateMenuState() {
 
 	}
@@ -78,17 +80,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			manager.addPlayer(player);
 		}
 		if (player.x > 700 && player.y < 40) {
-			player.ifWin = true;
 			currentState = WIN_STATE;
-		} else {
-			player.ifWin = false;
 		}
 	}
 
 	void updateEndState() {
 
 	}
-	
+
 	void updateWinState() {
 
 	}
@@ -130,15 +129,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, 780, 780);
-		if (currentLevel == 1) {
-			level.drawLevel1(g, manager);
-		} else if (currentLevel == 2) {
-			level.drawLevel2(g, manager);
-		} else if (currentLevel == 3) {
-			level.drawLevel3(g, manager);
-		} else if (currentLevel == 4) {
-			level.drawLevel4(g, manager);
-		} 
+		g.drawImage(GamePanel.gameBkgndImg, 0, 0, 780, 780, null);
+		g.setColor(Color.GREEN);
+		g.fillRect(710, 10, 60, 60);
+		g.setColor(Color.GRAY);
+		g.fillRect(10, 710, 60, 60);
+		g.setColor(Color.black);
+		g.drawString("Level " + currentLevel, 720, 750);
+		manager.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
@@ -152,7 +150,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.BLACK);
 		g.drawString("Press ENTER to try again", 275, 420);
 	}
-	
+
 	void drawWinState(Graphics g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(0, 0, 780, 780);
@@ -172,13 +170,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void startGame() {
-
 		timer.start();
-
 	}
 
+	@Override
 	public void paintComponent(Graphics g) {
-
 		if (currentState == MENU_STATE) {
 			drawMenuState(g);
 		} else if (currentState == GAME_STATE) {
@@ -188,7 +184,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		} else if (currentState == WIN_STATE) {
 			drawWinState(g);
 		}
-
 	}
 
 	@Override
@@ -199,63 +194,90 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			if (currentState == MENU_STATE) {
+		if (currentState == MENU_STATE) {
+			switch (e.getKeyCode()) {
+			case KeyEvent.VK_ENTER:
 				currentState++;
+				switch (currentLevel) {
+				case 1:
+					level.createLevel1(manager);
+					break;
+				case 2:
+					level.createLevel2(manager);
+					break;
+				case 3:
+					level.createLevel3(manager);
+					break;
+				case 4:
+					level.createLevel4(manager);
+					break;
+				}
+				break;
+			case KeyEvent.VK_E:
+				enemySpeed = 2;
+				break;
+			case KeyEvent.VK_M:
+				enemySpeed = 3;
+				break;
+			case KeyEvent.VK_H:
+				enemySpeed = 5;
+				break;
+			case KeyEvent.VK_L:
+				enemySpeed = 8;
+				break;
+			case KeyEvent.VK_1:
+				currentLevel = 1;
+				break;
+			case KeyEvent.VK_2:
+				currentLevel = 2;
+				break;
+			case KeyEvent.VK_3:
+				currentLevel = 3;
+				break;
+			case KeyEvent.VK_4:
+				currentLevel = 4;
+				break;
+
 			}
-			if (currentState == END_STATE) {
-				currentState = MENU_STATE;
-			}
-			if (currentState == WIN_STATE) {
-				currentState = MENU_STATE;
-			}
-		}
-		
-		if (e.getKeyCode() == KeyEvent.VK_E && currentState == MENU_STATE) {
-			 enemySpeed = 2; 
-		}
-		if (e.getKeyCode() == KeyEvent.VK_M && currentState == MENU_STATE) {
-			 enemySpeed = 4; 
-		}
-		if (e.getKeyCode() == KeyEvent.VK_H && currentState == MENU_STATE) {
-			 enemySpeed = 6;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_L && currentState == MENU_STATE) {
-			 enemySpeed = 8; 
-		}
-		
-		if (e.getKeyCode() == KeyEvent.VK_1 && currentState == MENU_STATE) {
-			 currentLevel = 1; 
-		}
-		if (e.getKeyCode() == KeyEvent.VK_2 && currentState == MENU_STATE) {
-			currentLevel = 2; 
-		}
-		if (e.getKeyCode() == KeyEvent.VK_3 && currentState == MENU_STATE) {
-			currentLevel = 3;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_4 && currentState == MENU_STATE) {
-			currentLevel = 4; 
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			player.up = true;
-			Projectile.lastMove = 0; 
+		if (currentState == END_STATE) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				currentState = MENU_STATE;
+			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			player.down = true; 
-			Projectile.lastMove = 2;
+
+		if (currentState == WIN_STATE) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				currentState = MENU_STATE;
+			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			player.right = true;
-			Projectile.lastMove = 1;
+
+		if (currentState == GAME_STATE) {
+			switch (e.getKeyCode()) {
+			case KeyEvent.VK_UP:
+				player.up = true;
+				Projectile.lastMove = 0;
+				break;
+			case KeyEvent.VK_RIGHT:
+				player.right = true;
+				Projectile.lastMove = 1;
+				break;
+			case KeyEvent.VK_DOWN:
+				player.down = true;
+				Projectile.lastMove = 2;
+				break;
+			case KeyEvent.VK_LEFT:
+				player.left = true;
+				Projectile.lastMove = 3;
+				break;
+			case KeyEvent.VK_SPACE:
+				manager.addProjectile(new Projectile(player.x + 15, player.y + 15, 10, 10));
+				break;
+			}
+
 		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			player.left = true;
-			Projectile.lastMove = 4;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE && currentState == GAME_STATE) {
-			manager.addProjectile(new Projectile(player.x + 15, player.y + 15, 10, 10));
-		}
+
 	}
 
 	@Override
@@ -264,7 +286,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			player.up = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			player.down = false; 
+			player.down = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			player.right = false;

@@ -1,9 +1,12 @@
 package adventureMaze;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class Projectile extends GameObject {
+	
+	private int speed, move; 
+	public static int lastMove; 
+	
 	public Projectile(int X, int Y, int Width, int Height) {
 		super();
 		x = X;
@@ -13,20 +16,17 @@ public class Projectile extends GameObject {
 		speed = 10; 
 		move = lastMove;
 	}
-	
-	int speed, move; 
-	static int lastMove; 
-	
+
+	@Override
 	public void update() {
 		super.update();
-		
 		if (move == 0) {
 			y -= speed; 
 		} else if (move == 2) {
 			y += speed;
 		} else if (move == 1) {
 			x += speed;
-		} else if (move == 4) {
+		} else if (move == 3) {
 			x -= speed;
 		}
 		if (y < 0) {
@@ -34,11 +34,9 @@ public class Projectile extends GameObject {
 		}
 	}
 
+	@Override
 	public void draw(Graphics g) {
 	 	g.drawImage(GamePanel.bulletImg, x, y, width, height, null);
-		//g.setColor(Color.blue);
-		//g.drawRect(x, y, width, height);
-
 	}
 	
 }

@@ -1,10 +1,13 @@
 package adventureMaze;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Player extends GameObject {
+	
+	private int speed, tempX, tempY;
+	public boolean up, down, left, right; 
+	
 	public Player(int X, int Y, int Width, int Height, int Speed) {
 		super();
 		x = X;
@@ -15,12 +18,9 @@ public class Player extends GameObject {
 		tempX = x; 
 		tempY = y;
 		collisionBox = new Rectangle(x, y, width, height);
-
 	}
 
-	int speed, tempX, tempY;
-	boolean up, down, left, right, ifWin; 
-
+	@Override
 	public void update() {
 
 		if (canMove) {
@@ -48,17 +48,12 @@ public class Player extends GameObject {
 		
 		collisionBox.setBounds(tempX, tempY, width, height);
 
-		if (Projectile.lastMove == 1) {
-
-		}
-
 
 	}
 
+	@Override
 	public void draw(Graphics g) {
 		g.drawImage(GamePanel.playerImg, x, y, width, height, null);
-		//g.setColor(Color.BLUE);
-		//g.drawRect(x, y, width, height);
 	}
 
 }

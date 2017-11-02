@@ -1,6 +1,5 @@
 package adventureMaze;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class Wall extends GameObject {
@@ -12,14 +11,13 @@ public class Wall extends GameObject {
 		height = Height;
 	}
 
+	@Override
 	public void update() {
 		super.update();
-
 	}
 
+	@Override
 	public void draw(Graphics g) {
 	 	g.drawImage(GamePanel.wallImg, x, y, width, height, null);
-		//g.setColor(Color.RED);
-		//g.drawRect(x, y, width, height);
 	}
 }

@@ -12,6 +12,7 @@ public class ObjectManager {
 
 	long enemyTimer = 0;
 	int enemySpawnTime = 3000;
+	Random randGen = new Random();
 
 	public ObjectManager() {
 		enemies = new ArrayList<Enemy>();
@@ -38,20 +39,16 @@ public class ObjectManager {
 
 	public void update() {
 		for (int j = 0; j < enemies.size(); j++) {
-			Enemy e = enemies.get(j);
-			e.update();
+			enemies.get(j).update();
 		}
 		for (int k = 0; k < players.size(); k++) {
-			Player p = players.get(k);
-			p.update();
+			players.get(k).update();
 		}
 		for (int l = 0; l < walls.size(); l++) {
-			Wall w = walls.get(l);
-			w.update();
+			walls.get(l).update();
 		}
 		for (int d = 0; d < projectiles.size(); d++) {
-			Projectile c = projectiles.get(d);
-			c.update();
+			projectiles.get(d).update();
 		}
 
 		purgeObjects();
@@ -60,20 +57,18 @@ public class ObjectManager {
 	public void draw(Graphics g) {
 
 		for (int j = 0; j < enemies.size(); j++) {
-			Enemy e = enemies.get(j);
-			e.draw(g);
+			enemies.get(j).draw(g);
+			;
 		}
 		for (int k = 0; k < players.size(); k++) {
-			Player p = players.get(k);
-			p.draw(g);
+			players.get(k).draw(g);
+			;
 		}
 		for (int l = 0; l < walls.size(); l++) {
-			Wall w = walls.get(l);
-			w.draw(g);
+			walls.get(l).draw(g);
 		}
 		for (int d = 0; d < projectiles.size(); d++) {
-			Projectile c = projectiles.get(d);
-			c.draw(g);
+			projectiles.get(d).draw(g);
 		}
 	}
 
@@ -102,33 +97,33 @@ public class ObjectManager {
 
 	public void manageEnemies() {
 		if (System.currentTimeMillis() - enemyTimer >= enemySpawnTime) {
-			Random randGen = new Random(); 
 			int r1 = randGen.nextInt(5);
-			if (r1 == 0) {
+			enemyTimer = System.currentTimeMillis();
+			switch (r1) {
+			case 0:
 				addEnemy(new Enemy(365, 295, 40, 40, GamePanel.enemySpeed));
-				enemyTimer = System.currentTimeMillis();
-			} else if (r1 == 1) {
+				break;
+			case 1:
 				addEnemy(new Enemy(15, 15, 40, 40, GamePanel.enemySpeed));
-				enemyTimer = System.currentTimeMillis();
-			} else if (r1 == 2) {
+				break;
+			case 2:
 				addEnemy(new Enemy(715, 715, 40, 40, GamePanel.enemySpeed));
-				enemyTimer = System.currentTimeMillis();
-			} else if (r1 == 3) {
+				break;
+			case 3:
 				addEnemy(new Enemy(435, 15, 40, 40, GamePanel.enemySpeed));
-				enemyTimer = System.currentTimeMillis();
-			} else if (r1 >= 4) {
+				break;
+			case 4:
 				addEnemy(new Enemy(715, 225, 40, 40, GamePanel.enemySpeed));
-				enemyTimer = System.currentTimeMillis();
+				break;
 			}
 		}
 	}
 
 	public void checkCollision() {
 		for (int i = 0; i < enemies.size(); i++) {
+			Enemy e1 = enemies.get(i);
 			for (int j = 0; j < players.size(); j++) {
-				Enemy e1 = enemies.get(i);
 				Player p1 = players.get(j);
-
 				if (e1.collisionBox.intersects(p1.collisionBox)) {
 					p1.isAlive = false;
 				}
@@ -136,21 +131,19 @@ public class ObjectManager {
 		}
 
 		for (int i = 0; i < enemies.size(); i++) {
+			Enemy e1 = enemies.get(i);
 			for (int j = 0; j < projectiles.size(); j++) {
-				Enemy e1 = enemies.get(i);
 				Projectile p1 = projectiles.get(j);
-
 				if (e1.collisionBox.intersects(p1.collisionBox)) {
 					e1.isAlive = false;
 				}
 			}
 		}
-		
-		for (int i = 0; i < walls.size(); i++) {
-			for (int j = 0; j < projectiles.size(); j++) {
-				Wall w1 = walls.get(i);
-				Projectile p1 = projectiles.get(j);
 
+		for (int i = 0; i < walls.size(); i++) {
+			Wall w1 = walls.get(i);
+			for (int j = 0; j < projectiles.size(); j++) {
+				Projectile p1 = projectiles.get(j);
 				if (w1.collisionBox.intersects(p1.collisionBox)) {
 					p1.isAlive = false;
 				}
@@ -158,22 +151,20 @@ public class ObjectManager {
 		}
 
 		for (int i = 0; i < enemies.size(); i++) {
+			Enemy e1 = enemies.get(i);
 			for (int j = 0; j < walls.size(); j++) {
-				Enemy e1 = enemies.get(i);
 				Wall w1 = walls.get(j);
-
 				if (e1.collisionBox.intersects(w1.collisionBox)) {
 					e1.canMove = false;
 				}
 
 			}
 		}
-		
-		for (int i = 0; i < enemies.size(); i++) {
-			for (int j = i+1; j < enemies.size(); j++) {
-				Enemy e1 = enemies.get(i);
-				Enemy e2 = enemies.get(j);
 
+		for (int i = 0; i < enemies.size(); i++) {
+			Enemy e1 = enemies.get(i);
+			for (int j = i + 1; j < enemies.size(); j++) {
+				Enemy e2 = enemies.get(j);
 				if (e1.collisionBox.intersects(e2.collisionBox)) {
 					e1.canMove = false;
 					e2.canMove = false;
@@ -183,10 +174,9 @@ public class ObjectManager {
 		}
 
 		for (int i = 0; i < players.size(); i++) {
+			Player p1 = players.get(i);
 			for (int j = 0; j < walls.size(); j++) {
-				Player p1 = players.get(i);
 				Wall w1 = walls.get(j);
-
 				if (p1.collisionBox.intersects(w1.collisionBox)) {
 					p1.canMove = false;
 				}

@@ -1,18 +1,12 @@
 package adventureMaze;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 public class LevelManager {
+	public LevelManager() {
+		
+	}
 
-	public void drawLevel1(Graphics g, ObjectManager manager) {
-		g.drawImage(GamePanel.gameBkgndImg, 0, 0, 780, 780, null);
-		g.setColor(Color.GREEN);
-		g.fillRect(710, 10, 60, 60);
-		g.setColor(Color.GRAY);
-		g.fillRect(10, 710, 60, 60);
-		g.setColor(Color.black);
-		g.drawString("Level 1", 720, 750);
+	public void createLevel1(ObjectManager manager) {
+
 		// Border Walls
 		manager.addWall(new Wall(0, 0, 10, 780));
 		manager.addWall(new Wall(770, 0, 10, 780));
@@ -89,17 +83,9 @@ public class LevelManager {
 		manager.addWall(new Wall(350, 700, 10, 80));
 		manager.addWall(new Wall(420, 700, 10, 80));
 
-		manager.draw(g);
 	}
 	
-	public void drawLevel3(Graphics g, ObjectManager manager) {
-		g.drawImage(GamePanel.gameBkgndImg, 0, 0, 780, 780, null);
-		g.setColor(Color.GREEN);
-		g.fillRect(710, 10, 60, 60);
-		g.setColor(Color.GRAY);
-		g.fillRect(10, 710, 60, 60);
-		g.setColor(Color.black);
-		g.drawString("Level 3", 720, 750);
+	public void createLevel3(ObjectManager manager) {
 		// Border Walls
 		manager.addWall(new Wall(0, 0, 10, 780));
 		manager.addWall(new Wall(770, 0, 10, 780));
@@ -166,17 +152,9 @@ public class LevelManager {
 		manager.addWall(new Wall(70, 700, 490, 10));
 		manager.addWall(new Wall(630, 700, 10, 80));
 		
-		manager.draw(g);
 	}
 	
-	public void drawLevel2(Graphics g, ObjectManager manager) {
-		g.drawImage(GamePanel.gameBkgndImg, 0, 0, 780, 780, null);
-		g.setColor(Color.GREEN);
-		g.fillRect(710, 10, 60, 60);
-		g.setColor(Color.GRAY);
-		g.fillRect(10, 710, 60, 60);
-		g.setColor(Color.black);
-		g.drawString("Level 2", 720, 750);
+	public void createLevel2(ObjectManager manager) {
 		// Border Walls
 		manager.addWall(new Wall(0, 0, 10, 780));
 		manager.addWall(new Wall(770, 0, 10, 780));
@@ -242,17 +220,9 @@ public class LevelManager {
 		manager.addWall(new Wall(0, 700, 70, 10));
 
 		
-		manager.draw(g);
 	}
 	
-	public void drawLevel4(Graphics g, ObjectManager manager) {
-		g.drawImage(GamePanel.gameBkgndImg, 0, 0, 780, 780, null);
-		g.setColor(Color.GREEN);
-		g.fillRect(710, 10, 60, 60);
-		g.setColor(Color.GRAY);
-		g.fillRect(10, 710, 60, 60);
-		g.setColor(Color.black);
-		g.drawString("Level 4", 720, 750);
+	public void createLevel4(ObjectManager manager) {
 		// Border Walls
 		manager.addWall(new Wall(0, 0, 10, 780));
 		manager.addWall(new Wall(770, 0, 10, 780));
@@ -336,7 +306,6 @@ public class LevelManager {
 		manager.addWall(new Wall(140, 700, 10, 80));
 		manager.addWall(new Wall(70, 700, 80, 10));
 		
-		manager.draw(g);
 	}
 
 }
