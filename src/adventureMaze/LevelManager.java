@@ -1,10 +1,22 @@
 package adventureMaze;
 
+/**
+ * The Class LevelManager.
+ */
 public class LevelManager {
+	
+	/**
+	 * Instantiates a new level manager.
+	 */
 	public LevelManager() {
 		
 	}
 
+	/**
+	 * Creates the level 1 wall objects.
+	 *
+	 * @param manager the ObjectManager
+	 */
 	public void createLevel1(ObjectManager manager) {
 
 		// Border Walls
@@ -85,6 +97,11 @@ public class LevelManager {
 
 	}
 	
+	/**
+	 * Creates the level 3 wall objects.
+	 *
+	 * @param manager the ObjectManager
+	 */
 	public void createLevel3(ObjectManager manager) {
 		// Border Walls
 		manager.addWall(new Wall(0, 0, 10, 780));
@@ -154,6 +171,11 @@ public class LevelManager {
 		
 	}
 	
+	/**
+	 * Creates the level 2 wall objects.
+	 *
+	 * @param manager the ObjectManager
+	 */
 	public void createLevel2(ObjectManager manager) {
 		// Border Walls
 		manager.addWall(new Wall(0, 0, 10, 780));
@@ -222,6 +244,11 @@ public class LevelManager {
 		
 	}
 	
+	/**
+	 * Creates the level 4 wall objects.
+	 *
+	 * @param manager the ObjectManager
+	 */
 	public void createLevel4(ObjectManager manager) {
 		// Border Walls
 		manager.addWall(new Wall(0, 0, 10, 780));

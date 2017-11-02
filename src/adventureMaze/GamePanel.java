@@ -14,22 +14,34 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * The Class GamePanel.
+ */
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	
+	/** Private Timer object. Used to call actionPerformed method at set intervals once game is started. */
 	private Timer timer;
+	// Creating objects of all the various classes needed
 	public GameObject game;
 	private LevelManager level;
 	private Font titleFont, startFont, instructionsFont, gameOverFont, scoreFont;
 	private Player player;
 	public ObjectManager manager;
+	// Variables to keep track of the various game states
 	private final int MENU_STATE = 0, GAME_STATE = 1, END_STATE = 2, WIN_STATE = 3;
 	private int currentState = MENU_STATE, currentLevel = 1;
+	// Images for graphics
 	public static BufferedImage playerImg, enemyImg, bulletImg, menuBkgndImg, endBkgndImg, gameBkgndImg, wallImg,
 			winBkgndImg;
 	public static int playerX, playerY, enemySpeed;
 	
+	/**
+	 * Constructor for the GamePanel class. Instantiates a new game panel, initializes all the member variables, gets images in a try/catch statement. 
+	 */
 	public GamePanel() {
-		
+	
+		//initialize all the variables
+		// timer is initialized at 60 updates a second (1000 milliseconds) or 1000 / 60
 		timer = new Timer(1000 / 60, this);
 		game = new GameObject();
 		titleFont = new Font("Arial", Font.BOLD, 64);
@@ -46,6 +58,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		level = new LevelManager();
 		level.createLevel1(manager);
 
+		// get images from files
 		try {
 			playerImg = ImageIO.read(this.getClass().getResourceAsStream("images/PlayerImg.png"));
 			enemyImg = ImageIO.read(this.getClass().getResourceAsStream("images/EnemyImg.png"));
@@ -63,11 +76,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	void updateMenuState() {
+	/**
+	 * Update menu state.
+	 */
+	private void updateMenuState() {
 
 	}
 
-	void updateGameState() {
+	/**
+	 * Update game state. Updates the game objects, checks if the player is alive or has won. 
+	 */
+	private void updateGameState() {
 		playerX = player.x;
 		playerY = player.y;
 		manager.update();
@@ -84,15 +103,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 
-	void updateEndState() {
+	/**
+	 * Update end state.
+	 */
+	private void updateEndState() {
 
 	}
 
-	void updateWinState() {
+	/**
+	 * Update win state.
+	 */
+	private void updateWinState() {
 
 	}
 
-	void drawMenuState(Graphics g) {
+	/**
+	 * Draw menu state. Uses the Graphics object, g, and images initialized in the constructor to create the graphics for the menu state.
+	 *
+	 * @param g the Graphics object
+	 */
+	private void drawMenuState(Graphics g) {
 		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, 780, 780);
 		g.drawImage(menuBkgndImg, 0, 0, 780, 780, null);
@@ -126,7 +156,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("Current Level: " + currentLevel, 550, 650);
 	}
 
-	void drawGameState(Graphics g) {
+	/**
+	 * Draw game state. Uses the Graphics object, g, and images initialized in the constructor to create the graphics for the game state. Calls the draw method in ObjectManager to draw all game objects.
+	 *
+	 * @param g the Graphics object
+	 */
+	private void drawGameState(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, 780, 780);
 		g.drawImage(GamePanel.gameBkgndImg, 0, 0, 780, 780, null);
@@ -139,7 +174,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		manager.draw(g);
 	}
 
-	void drawEndState(Graphics g) {
+	/**
+	 * Draw end state. Uses the Graphics object, g, and images initialized in the constructor to create the graphics for the end or game over state.
+	 *
+	 * @param g the Graphics object
+	 */
+	private void drawEndState(Graphics g) {
 		g.setColor(new Color(216, 91, 91));
 		g.fillRect(0, 0, 780, 780);
 		g.drawImage(endBkgndImg, 0, 0, 780, 780, null);
@@ -151,7 +191,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("Press ENTER to try again", 275, 420);
 	}
 
-	void drawWinState(Graphics g) {
+	/**
+	 * Draw win state. Uses the Graphics object, g, and images initialized in the constructor to create the graphics for the win state.
+	 *
+	 * @param g the Graphics object
+	 */
+	private void drawWinState(Graphics g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(0, 0, 780, 780);
 		g.drawImage(winBkgndImg, 0, 0, 780, 780, null);
@@ -169,35 +214,58 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	void startGame() {
+	/**
+	 * Start game. Starts the timer object. 
+	 */
+	public void startGame() {
 		timer.start();
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 * 
+	 * Calls the draw method for each state. 
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		if (currentState == MENU_STATE) {
+		switch (currentState) {
+		case MENU_STATE: 
 			drawMenuState(g);
-		} else if (currentState == GAME_STATE) {
+			break;
+		case GAME_STATE:
 			drawGameState(g);
-		} else if (currentState == END_STATE) {
+			break;
+		case END_STATE:
 			drawEndState(g);
-		} else if (currentState == WIN_STATE) {
+			break;
+		case WIN_STATE:
 			drawWinState(g);
+			break;
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 * 
+	 * Sets different variables and controls different movements in each of the states depending on the key pressed. 
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+		// In menu state
 		if (currentState == MENU_STATE) {
+			// go to game state
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_ENTER:
 				currentState++;
+				// create the wall objects for the level
 				switch (currentLevel) {
 				case 1:
 					level.createLevel1(manager);
@@ -213,6 +281,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 					break;
 				}
 				break;
+			// set difficulty (enemy speed)
 			case KeyEvent.VK_E:
 				enemySpeed = 2;
 				break;
@@ -225,6 +294,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			case KeyEvent.VK_L:
 				enemySpeed = 8;
 				break;
+			// set level
 			case KeyEvent.VK_1:
 				currentLevel = 1;
 				break;
@@ -241,20 +311,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 
+		// In end state
 		if (currentState == END_STATE) {
+			// go to menu state
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				currentState = MENU_STATE;
 			}
 		}
-
+		
+		// In end state
 		if (currentState == WIN_STATE) {
+			// go to menu state
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				currentState = MENU_STATE;
 			}
 		}
 
+		// in game state
 		if (currentState == GAME_STATE) {
 			switch (e.getKeyCode()) {
+			// player movement, projectile creation and travel direction controls
 			case KeyEvent.VK_UP:
 				player.up = true;
 				Projectile.lastMove = 0;
@@ -280,42 +356,57 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			player.up = false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			player.down = false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			player.right = false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			player.left = false;
+		// player movement controls
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP: 
+			player.up = false; 
+			break; 
+		case KeyEvent.VK_DOWN: 
+			player.down = false; 
+			break; 
+		case KeyEvent.VK_RIGHT: 
+			player.right = false; 
+			break; 
+		case KeyEvent.VK_LEFT: 
+			player.left = false; 
+			break; 
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if (currentState == MENU_STATE) {
+		// update states, reset objects if in win or end state
+		switch (currentState) {
+		case MENU_STATE: 
 			updateMenuState();
-		} else if (currentState == GAME_STATE) {
+			break;
+		case GAME_STATE:
 			updateGameState();
-		} else if (currentState == END_STATE) {
+			break;
+		case END_STATE:
 			updateEndState();
 			manager.reset();
 			player = new Player(11, 720, 35, 35, 5);
 			manager.addPlayer(player);
-		} else if (currentState == WIN_STATE) {
+			break;
+		case WIN_STATE:
 			updateWinState();
 			manager.reset();
 			player = new Player(11, 720, 35, 35, 5);
 			manager.addPlayer(player);
+			break;
 		}
 
 		repaint();
+		
 	}
 
 }
