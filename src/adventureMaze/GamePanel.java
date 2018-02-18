@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	private final int MENU_STATE = 0, GAME_STATE = 1, END_STATE = 2, WIN_STATE = 3;
 	private int currentState = MENU_STATE, currentLevel = 1;
 	// Images for graphics
-	public static BufferedImage playerImg, enemyImg, bulletImg, menuBkgndImg, endBkgndImg, gameBkgndImg, wallImg,
+	public static BufferedImage playerImg, playerImgUp, playerImgDown, playerImgLeft, playerImgRight, enemyImg, bulletImg, menuBkgndImg, endBkgndImg, gameBkgndImg, wallImg,
 			winBkgndImg;
 	public static int playerX, playerY, enemySpeed;
 	
@@ -60,7 +60,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		// get images from files
 		try {
-			playerImg = ImageIO.read(this.getClass().getResourceAsStream("images/PlayerImg.png"));
+			playerImgUp = ImageIO.read(this.getClass().getResourceAsStream("images/PlayerImg.png"));
+			playerImgDown = ImageIO.read(this.getClass().getResourceAsStream("images/PlayerImgDown.png"));
+			playerImgLeft = ImageIO.read(this.getClass().getResourceAsStream("images/PlayerImgLeft.png"));
+			playerImgRight = ImageIO.read(this.getClass().getResourceAsStream("images/PlayerImgRight.png"));
 			enemyImg = ImageIO.read(this.getClass().getResourceAsStream("images/EnemyImg.png"));
 			bulletImg = ImageIO.read(this.getClass().getResourceAsStream("images/BulletImg.png"));
 			wallImg = ImageIO.read(this.getClass().getResourceAsStream("images/WallImg.png"));
@@ -73,6 +76,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			// TODO: handle exceptions
 			e.printStackTrace();
 		}
+		
+		playerImg = playerImgUp; 
 
 	}
 
@@ -334,18 +339,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			case KeyEvent.VK_UP:
 				player.up = true;
 				Projectile.lastMove = 0;
+				playerImg = playerImgUp; 
 				break;
 			case KeyEvent.VK_RIGHT:
 				player.right = true;
 				Projectile.lastMove = 1;
+				playerImg = playerImgRight; 
 				break;
 			case KeyEvent.VK_DOWN:
 				player.down = true;
 				Projectile.lastMove = 2;
+				playerImg = playerImgDown; 
 				break;
 			case KeyEvent.VK_LEFT:
 				player.left = true;
 				Projectile.lastMove = 3;
+				playerImg = playerImgLeft; 
 				break;
 			case KeyEvent.VK_SPACE:
 				manager.addProjectile(new Projectile(player.x + 15, player.y + 15, 10, 10));
